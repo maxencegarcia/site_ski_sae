@@ -1,7 +1,7 @@
 {#
-articles (tableau de dictionnaires)
-* tableau de "article"
-    * id_article, nom, type_article_id, prix
+skis (tableau de dictionnaires)
+* tableau de "ski"
+    * id_ski, nom, type_ski_id, prix
     * option :
         * stock ,
         * nb_avis ,
@@ -10,28 +10,28 @@ articles (tableau de dictionnaires)
 {% extends 'admin/layout_admin.html' %}
 
 {% block title %}
-    <title>afficher les articles</title>
+    <title>afficher les skis</title>
 {% endblock %}
 
 {% block body %}
-<h3>article</h3>
-<a  class="btn btn-outline-success" href="/admin/article/add">ajouter un article</a>
+<h3>ski</h3>
+<a  class="btn btn-outline-success" href="/admin/ski/add">ajouter un ski</a>
 <br><br>
-{#{{ articles }}#}
+{#{{ skis }}#}
 <table class="table">
     <thead class="thead-dark">
         <tr>
-            <th>nom</th><th>id</th><th>type article (id)</th><th>prix</th><th style="color: green">stock</th>
+            <th>nom</th><th>id</th><th>type ski (id)</th><th>prix</th><th style="color: green">stock</th>
             <th>nouveaux avis</th><th>nb déclinaisons</th><th>image</th><th>opération</th>
         </tr>
     </thead>
     <tbody>
-    {% if articles | length >= 1 %}
-        {% for ligne in articles %}
+    {% if skis | length >= 1 %}
+        {% for ligne in skis %}
            <tr>
                   <td>{{ ligne.nom }}</td>
-                  <td>{{ ligne.id_article }}</td>
-                  <td><span style="color: red">{{ ligne.libelle }}</span> ({{ ligne.type_article_id }})</td>
+                  <td>{{ ligne.id_ski }}</td>
+                  <td><span style="color: red">{{ ligne.libelle }}</span> ({{ ligne.type_ski_id }})</td>
                   <td>{#{ ligne.prix }#}  {{  "{:,.2f} €".format(ligne.prix) }}</td>
                   <td>
                   {% if ligne.stock is defined %}
@@ -42,7 +42,7 @@ articles (tableau de dictionnaires)
                                 <span style="color: #fd7e14">(⚠️ déclinaison(s) en rupture)</span>
                             {% endif %}
                         {% else %}
-                            <strong class="text-muted">article momentanément indisponible</strong>
+                            <strong class="text-muted">ski momentanément indisponible</strong>
                         {% endif %}
                      {% else %}
                              <strong class="text-muted">déclinaison ND</strong>
@@ -54,7 +54,7 @@ articles (tableau de dictionnaires)
                    <td>
                   {% if ligne.nb_commentaires_nouveaux is defined %}
                      {% if ligne.nb_commentaires_nouveaux > 0 %}
-                         <a href="/admin/article/commentaires?id_article={{ ligne.id_article }}"><strong style="color: red">{{ ligne.nb_commentaires_nouveaux }} avis non lu(s) ⚠️ </strong></a>
+                         <a href="/admin/ski/commentaires?id_ski={{ ligne.id_ski }}"><strong style="color: red">{{ ligne.nb_commentaires_nouveaux }} avis non lu(s) ⚠️ </strong></a>
                      {% else %}
                         <strong class="text-muted"></strong>
                      {% endif %}
@@ -79,16 +79,16 @@ articles (tableau de dictionnaires)
                         {% endif %}
                   </td>
                   <td>
-                      <a  class="btn btn-outline-danger" href="/admin/article/delete?id_article={{ ligne.id_article }}" onclick="return confirm('Are you sure?')" >supprimer</a>
-                      <a  class="btn btn-outline-warning" href="/admin/article/edit?id_article={{ ligne.id_article }}">editer</a>
-                      <a  class="btn btn-outline-warning" href="/admin/article/commentaires?id_article={{ ligne.id_article }}">commentaires</a>
+                      <a  class="btn btn-outline-danger" href="/admin/ski/delete?id_ski={{ ligne.id_ski }}" onclick="return confirm('Are you sure?')" >supprimer</a>
+                      <a  class="btn btn-outline-warning" href="/admin/ski/edit?id_ski={{ ligne.id_ski }}">editer</a>
+                      <a  class="btn btn-outline-warning" href="/admin/ski/commentaires?id_ski={{ ligne.id_ski }}">commentaires</a>
                   </td>
            </tr>
         {% endfor %}
     {% else %}
             <tr>
                   <td>
-                      pas d'article
+                      pas d'ski
                   </td>
            </tr>
     {% endif %}

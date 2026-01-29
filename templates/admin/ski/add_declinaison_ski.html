@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    <h2>ajouter une déclinaison d'un article</h2>
+    <h2>ajouter une déclinaison d'un ski</h2>
     <div class="row mt-5">
-    {% if article.image is defined and article.image is not none %}
-        <img class="card-img-top rounded mx-4 d-block"  style="width:200px; height:200px; border: 1px solid black; padding: 25px;" id="output" src="{{ url_for('static', filename = 'images/')}}{{ article.image }}" alt="">
+    {% if ski.image is defined and ski.image is not none %}
+        <img class="card-img-top rounded mx-4 d-block"  style="width:200px; height:200px; border: 1px solid black; padding: 25px;" id="output" src="{{ url_for('static', filename = 'images/')}}{{ ski.image }}" alt="">
     {% endif %}
         <div class="w-25">
-            <form class="w-190" method="post" action="/admin/declinaison_article/add">
-                <input id="id_article" type="hidden" name="id_article" value="{{ article.id_article }}">
+            <form class="w-190" method="post" action="/admin/declinaison_ski/add">
+                <input id="id_ski" type="hidden" name="id_ski" value="{{ ski.id_ski }}">
                 <label for="stock">stock :
                     <input name="stock" id="stock" type="number" class="form-control" required>
                 </label>
@@ -47,7 +47,7 @@
                 </label>
 
             </form>
-         <a href="/admin/article/edit?id_article={{ article.id_article }}"><button class="btn btn-secondary mt-2">annuler</button></a>
+         <a href="/admin/ski/edit?id_ski={{ ski.id_ski }}"><button class="btn btn-secondary mt-2">annuler</button></a>
         </div>
     </div>
 {% endblock %}
