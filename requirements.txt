@@ -1,4 +1,4 @@
 flask
 pymysql
 cryptography
-dotenv
+python-dotenv
