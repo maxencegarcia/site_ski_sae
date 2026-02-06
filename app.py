@@ -32,23 +32,8 @@ app = Flask(__name__)
 app.secret_key = 'une cle(token) : grain de sel(any random string)'
 
 from flask import session, g
-import pymysql.cursors
 
-import os                                 # à ajouter
-from dotenv import load_dotenv            # à ajouter
-load_dotenv()                             # à ajouter
 
-def get_db():
-    if 'db' not in g:
-        g.db =  pymysql.connect(
-            host=os.environ.get("serveurmysql.iut-bm.univ-fcomte.fr"),                # à modifier
-            user=os.environ.get("educret"),               # à modifier
-            password=os.environ.get("secret"),        # à modifier
-            database=os.environ.get("BDD_educret_sae"),        # à modifier
-            charset='utf8mb4',
-            cursorclass=pymysql.cursors.DictCursor
-        )
-    return g.db
 
 @app.teardown_appcontext
 def teardown_db(exception):

@@ -108,13 +108,40 @@ def client_panier_filtre():
     filter_prix_min = request.form.get('filter_prix_min', None)
     filter_prix_max = request.form.get('filter_prix_max', None)
     filter_types = request.form.getlist('filter_types', None)
-    # test des variables puis
-    # mise en session des variables
+
+    if filter_word or filter_word == "":
+        if len(filter_word) > 1:
+            filter_word = filter_word.strip()
+            if len(filter_word) > 1:
+                session['filter_word'] = filter_word
+            else:
+                session.pop('filter_word', None)
+        else:
+            session.pop('filter_word', None)
+
+    if filter_prix_min or filter_prix_max:
+        if filter_prix_min.isnumeric():
+            session['filter_prix_min'] = filter_prix_min
+        else:
+            session.pop('filter_prix_min', None)
+        if filter_prix_max.isnumeric():
+            session['filter_prix_max'] = filter_prix_max
+        else:
+            session.pop('filter_prix_max', None)
+    
+    if filter_types:
+        session['filter_types'] = filter_types
+    else:
+        session['filter_types'] = []
+    
     return redirect('/client/ski/show')
 
 
 @client_panier.route('/client/panier/filtre/suppr', methods=['POST'])
 def client_panier_filtre_suppr():
-    # suppression  des variables en session
+    session.pop('filter_word', None)
+    session.pop('filter_types', None)
+    session.pop('filter_prix_min', None)
+    session.pop('filter_prix_max', None)
     print("suppr filtre")
     return redirect('/client/ski/show')
