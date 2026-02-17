@@ -58,6 +58,10 @@
                     <form action="/client/commande/valide"  style="display: inline-block;"  method="post" >
                         <button class="btn btn-primary" > Passer ma commande </button>
                     </form>
+                <form action="/client/panier/valider" method="post">
+                        <button type="submit" class="btn btn-primary"> Valider la commande</button>
+                </form>
+
                     {% endif %}
                     {% if prix_total %}
                     Total à payer : <strong>{{ "{:,.2f} €".format(prix_total) }}</strong>
