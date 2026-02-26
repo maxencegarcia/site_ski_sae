@@ -13,36 +13,46 @@ client_coordonnee = Blueprint('client_coordonnee', __name__,
 def client_coordonnee_show():
     mycursor = get_db().cursor()
     id_client = session['id_user']
-    utilisateur=[]
-    return render_template('client/coordonnee/show_coordonnee.html'
-                           , utilisateur=utilisateur
-                         #  , adresses=adresses
-                         #  , nb_adresses=nb_adresses
-                           )
+
+    # Correction : Récupérer les vraies infos du client
+    sql = "SELECT * FROM utilisateur WHERE id_utilisateur = %s"
+    mycursor.execute(sql, (id_client,))
+    utilisateur = mycursor.fetchone()  # Récupère la ligne de l'utilisateur
+
+    return render_template('client/coordonnee/show_coordonnee.html', utilisateur=utilisateur)
+
 
 @client_coordonnee.route('/client/coordonnee/edit', methods=['GET'])
 def client_coordonnee_edit():
     mycursor = get_db().cursor()
     id_client = session['id_user']
 
-    return render_template('client/coordonnee/edit_coordonnee.html'
-                           #,utilisateur=utilisateur
-                           )
+    # Correction : On va chercher les données pour pré-remplir le formulaire
+    sql = "SELECT * FROM utilisateur WHERE id_utilisateur = %s"
+    mycursor.execute(sql, (id_client,))
+    utilisateur = mycursor.fetchone()
+
+    return render_template('client/coordonnee/edit_coordonnee.html', utilisateur=utilisateur)
+
 
 @client_coordonnee.route('/client/coordonnee/edit', methods=['POST'])
 def client_coordonnee_edit_valide():
     mycursor = get_db().cursor()
     id_client = session['id_user']
-    nom=request.form.get('nom')
+
+    # Récupération des données du formulaire HTML
+    nom = request.form.get('nom')
     login = request.form.get('login')
     email = request.form.get('email')
 
-    utilisateur = None
-    if utilisateur:
-        flash(u'votre cet Email ou ce Login existe déjà pour un autre utilisateur', 'alert-warning')
-        return render_template('client/coordonnee/edit_coordonnee.html'
-                               #, user=user
-                               )
+    # --- AJOUT DU SQL UPDATE ---
+    sql = "UPDATE utilisateur SET nom = %s, login = %s, email = %s WHERE id_utilisateur = %s"
+    mycursor.execute(sql, (nom, login, email, id_client))
+
+    get_db().commit()  # Très important pour enregistrer dans la base !
+    flash(u'Profil mis à jour avec succès', 'alert-success')
+
+    return redirect('/client/coordonnee/show')
 
 
     get_db().commit()
