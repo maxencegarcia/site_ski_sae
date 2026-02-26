@@ -8,48 +8,41 @@ DROP TABLE IF EXISTS longueur;
 DROP TABLE IF EXISTS type_ski;
 DROP TABLE IF EXISTS marque;
 
-
 CREATE TABLE type_ski (
-    id_type_ski INT PRIMARY KEY AUTO_INCREMENT,
-    libelle_type_ski VARCHAR(255) 
-);
-CREATE TABLE type_ski (
-    id_type_ski INT PRIMARY KEY AUTO_INCREMENT,
-    libelle_type_ski VARCHAR(255) 
+    id_type_ski INT AUTO_INCREMENT PRIMARY KEY,
+    libelle_type_ski VARCHAR(255)
 );
 
 CREATE TABLE longueur (
-    id_longueur INT PRIMARY KEY AUTO_INCREMENT,
-    libelle_longueur VARCHAR(255) 
+    id_longueur INT AUTO_INCREMENT PRIMARY KEY,
+    libelle_longueur VARCHAR(255)
 );
 
 CREATE TABLE etat (
-    id_etat INT PRIMARY KEY AUTO_INCREMENT,
-    libelle_etat VARCHAR(255) 
+    id_etat INT AUTO_INCREMENT PRIMARY KEY,
+    libelle_etat VARCHAR(255)
 );
 
 CREATE TABLE marque (
-    id_marque INT PRIMARY KEY AUTO_INCREMENT,
+    id_marque INT AUTO_INCREMENT PRIMARY KEY,
     libelle VARCHAR(255)
 );
 
-
-
 CREATE TABLE utilisateur (
-    id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
+    id_utilisateur INT AUTO_INCREMENT PRIMARY KEY,
     login VARCHAR(255) UNIQUE,
     email VARCHAR(255) UNIQUE,
     nom VARCHAR(255),
     password VARCHAR(255),
-    role VARCHAR(50), 
+    role VARCHAR(50),
     est_actif TINYINT(1)
 );
 
 CREATE TABLE ski (
-    id_ski INT PRIMARY KEY AUTO_INCREMENT,
+    id_ski INT AUTO_INCREMENT PRIMARY KEY,
     nom_ski VARCHAR(255),
     largeur INT,
-    prix_ski DECIMAL(10, 2),
+    prix_ski DECIMAL(10,2),
     fournisseur VARCHAR(255),
     id_marque INT,
     conseil_utilisation TEXT,
@@ -63,19 +56,17 @@ CREATE TABLE ski (
 );
 
 CREATE TABLE commande (
-    id_commande INT PRIMARY KEY AUTO_INCREMENT,
+    id_commande INT AUTO_INCREMENT PRIMARY KEY,
     date_commande DATETIME DEFAULT CURRENT_TIMESTAMP,
-    etat_id INT, 
+    etat_id INT,
     utilisateur_id INT,
     FOREIGN KEY (etat_id) REFERENCES etat(id_etat),
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id_utilisateur)
 );
 
-
-
 CREATE TABLE ligne_commande (
     commande_id INT,
-    ski_id INT,      
+    ski_id INT,
     quantite INT,
     PRIMARY KEY (commande_id, ski_id),
     FOREIGN KEY (commande_id) REFERENCES commande(id_commande),
@@ -84,80 +75,7 @@ CREATE TABLE ligne_commande (
 
 CREATE TABLE ligne_panier (
     utilisateur_id INT,
-    ski_id INT,      
-    quantite_panier INT,
-    PRIMARY KEY (utilisateur_id, ski_id),
-    FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id_utilisateur),
-    FOREIGN KEY (ski_id) REFERENCES ski(id_ski)
-);
-
-CREATE TABLE longueur (
-    id_longueur INT PRIMARY KEY AUTO_INCREMENT,
-    libelle_longueur VARCHAR(255) 
-);
-
-CREATE TABLE etat (
-    id_etat INT PRIMARY KEY AUTO_INCREMENT,
-    libelle_etat VARCHAR(255) 
-);
-
-CREATE TABLE marque (
-    id_marque INT PRIMARY KEY AUTO_INCREMENT,
-    libelle VARCHAR(255)
-);
-
-
-
-CREATE TABLE utilisateur (
-    id_utilisateur INT PRIMARY KEY AUTO_INCREMENT,
-    login VARCHAR(255) UNIQUE,
-    email VARCHAR(255) UNIQUE,
-    nom VARCHAR(255),
-    password VARCHAR(255),
-    role VARCHAR(50), 
-    est_actif TINYINT(1)
-);
-
-CREATE TABLE ski (
-    id_ski INT PRIMARY KEY AUTO_INCREMENT,
-    nom_ski VARCHAR(255),
-    largeur INT,
-    prix_ski DECIMAL(10, 2),
-    fournisseur VARCHAR(255),
-    id_marque INT,
-    conseil_utilisation TEXT,
-    photo VARCHAR(255),
-    stock INT DEFAULT 0,
-    type_ski_id INT,
-    longueur_id INT,
-    FOREIGN KEY (id_marque) REFERENCES marque(id_marque),
-    FOREIGN KEY (type_ski_id) REFERENCES type_ski(id_type_ski),
-    FOREIGN KEY (longueur_id) REFERENCES longueur(id_longueur)
-);
-
-CREATE TABLE commande (
-    id_commande INT PRIMARY KEY AUTO_INCREMENT,
-    date_commande DATETIME DEFAULT CURRENT_TIMESTAMP,
-    etat_id INT, 
-    utilisateur_id INT,
-    FOREIGN KEY (etat_id) REFERENCES etat(id_etat),
-    FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id_utilisateur)
-);
-
-
-
-CREATE TABLE ligne_commande (
-    commande_id INT,
-    ski_id INT,      
-    quantite INT,
-    PRIMARY KEY (commande_id, ski_id),
-    FOREIGN KEY (commande_id) REFERENCES commande(id_commande),
-    FOREIGN KEY (ski_id) REFERENCES ski(id_ski)
-);
-
-CREATE TABLE ligne_panier (
-    utilisateur_id INT,
-    ski_id INT,      
+    ski_id INT,
     quantite_panier INT,
     PRIMARY KEY (utilisateur_id, ski_id),
     FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id_utilisateur),
