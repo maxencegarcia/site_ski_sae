@@ -1,14 +1,7 @@
-{% extends "client/layout_client.html" %}
+{% extends 'client/layout_client.html' %}
 
 {% block content %}
-    {% include "client/boutique/_panier.html" %}
+    <h2>Mon panier</h2>
+
+    {% include 'client/boutique/_panier.html' %}
 {% endblock %}
-
-
-
-<img src="{% if ski.image %}
-            {{ url_for('static', filename='images/' + ski.image) }}
-          {% else %}
-            {{ url_for('static', filename='images/no_photo.jpg') }}
-          {% endif %}"
-     alt="photo ski">
