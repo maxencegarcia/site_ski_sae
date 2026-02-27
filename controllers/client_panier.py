@@ -63,7 +63,7 @@ def client_panier_add():
     #mycursor.execute(sql, (quantite, id_ski))
 
     get_db().commit()
-    return redirect('/client/ski/show')
+    return redirect('/client/panier/show')
 
 
 @client_panier.route('/client/panier/delete', methods=['POST'])
